@@ -6,5 +6,7 @@ const getcontrol = require("../Controles/getcontrol");
 
 route.get("/", getcontrol.getslash);
 route.get("/aboutme",getcontrol.getsaboutme);
+route.get("/testimony",getcontrol.gettestimony);
+route.get("/services",getcontrol.getservices);
 
 module.exports = route;
