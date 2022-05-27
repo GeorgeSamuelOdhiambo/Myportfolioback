@@ -2,7 +2,9 @@ const Getinfo = require("../DbModels/getinfo");
 const Aboutme = require("../DbModels/aboutmeinfo");
 const Testimony = require("../DbModels/testimony");
 const Services = require("../DbModels/services");
-const nodemailer = require('nodemailer');
+const nodemailer = require("nodemailer");
+const { path } = require("express/lib/application");
+
 
 exports.updateFooter = async (req, res, next) => {
   try {
@@ -80,12 +82,11 @@ exports.updateAbout = async (req, res, next) => {
 
 exports.updadeTestimony = async (req, res, next) => {
   try {
-
-    const Test = await Testimony.find({email : req.body.email})
+    const Test = await Testimony.find({ email: req.body.email });
 
     if (Test.length > 0) {
       const info = await Testimony.updateOne(
-        { _id : Test._id },
+        { _id: Test._id },
         {
           name: req.body.name,
           imageUrl: req.body.imageUrl,
@@ -96,22 +97,20 @@ exports.updadeTestimony = async (req, res, next) => {
         massage: "Saved",
         info,
       });
-    }
-    else{
+    } else {
       const info = new Testimony({
         email: req.body.email,
         name: req.body.name,
         imageUrl: req.body.imageUrl,
         test: req.body.test,
       });
-  
+
       const result = await info.save();
       res.status(201).json({
         message: "Information Saved",
         result,
       });
     }
-
   } catch (error) {
     console.log("Error while saving Testimony info" + error);
     res.status(500).json({ error: "Somthing went wrong" });
@@ -120,12 +119,11 @@ exports.updadeTestimony = async (req, res, next) => {
 
 exports.updadeServices = async (req, res, next) => {
   try {
-
-    const Test = await Services.find({header: req.body.header})
+    const Test = await Services.find({ header: req.body.header });
 
     if (Test.length > 0) {
       const info = await Services.updateOne(
-        { header : Test.header },
+        { header: Test.header },
         {
           imageUrl: req.body.imageUrl,
           text: req.body.text,
@@ -135,21 +133,19 @@ exports.updadeServices = async (req, res, next) => {
         massage: "Saved",
         info,
       });
-    }
-    else{
+    } else {
       const info = new Services({
         header: req.body.header,
         imageUrl: req.body.imageUrl,
         text: req.body.text,
       });
-  
+
       const result = await info.save();
       res.status(201).json({
         message: "Information Saved",
         result,
       });
     }
-
   } catch (error) {
     console.log("Error while saving Testimony info" + error);
     res.status(500).json({ error: "Somthing went wrong" });
@@ -157,22 +153,24 @@ exports.updadeServices = async (req, res, next) => {
 };
 
 exports.sendMail = async (req, res, next) => {
-  let mailsender = 'nyangtechnovet@gmail.com';
+  let mailsender = "nyangtechnovet@gmail.com";
+  let whatsapp = +25496699782
+  let call = +254110494133
   const transporter = nodemailer.createTransport({
-    service: 'gmail',
+    service: "gmail",
     auth: {
       user: mailsender,
-      pass: 'uhxjogpkqkrfwigk'
-    }
+      pass: "uhxjogpkqkrfwigk",
+    },
   });
-  
+
   let mailOptions = {
     from: mailsender,
     to: req.body.email,
-    subject: req.body.subject,
-    text: req.body.text
+    subject: "Nyangtechnovet",
+    text: `Thank you ${req.body.name} for contacting me, all get in touch as soon as possible. You can also contact me on WhatsApp ${whatsapp} or call me on ${call} at any time. `,
   };
-  
+
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
       console.log(error);
@@ -181,11 +179,32 @@ exports.sendMail = async (req, res, next) => {
         error,
       });
     } else {
-      console.log('Email sent: ' + info.response);
+      console.log("Email sent: " + info.response);
       res.status(200).json({
         massage: "Email sent",
-        info : info.response,
+        info: info.response,
       });
     }
   });
-}
+
+  let mailOption = {
+    from: mailsender,
+    to: "georgeodhi98@gmail.com",
+    subject: "Feedback From Your Portfolio",
+    text: `${req.body.name} email ${req.body.email} has sent you a mail`,
+  };
+  transporter.sendMail(mailOption, (error, info) => {
+    if (error) {
+      console.log(error);
+      res.status(500).json({
+        massage: "An error",
+      });
+    } else {
+      console.log("Email sent: " + info.response);
+      res.status(200).json({
+        massage: "Email sent",
+        info: info.response,
+      });
+    }
+  });
+};
