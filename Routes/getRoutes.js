@@ -8,5 +8,6 @@ route.get("/", getcontrol.getslash);
 route.get("/aboutme",getcontrol.getsaboutme);
 route.get("/testimony",getcontrol.gettestimony);
 route.get("/services",getcontrol.getservices);
+route.get("/resume",getcontrol.getresume);
 
 module.exports = route;

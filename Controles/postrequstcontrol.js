@@ -1,7 +1,8 @@
 const Getinfo = require("../DbModels/getinfo");
 const Aboutme = require("../DbModels/aboutmeinfo");
 const Testimony = require("../DbModels/testimony");
-const Services = require("../DbModels/services")
+const Services = require("../DbModels/services");
+const nodemailer = require('nodemailer');
 
 exports.updateFooter = async (req, res, next) => {
   try {
@@ -154,3 +155,37 @@ exports.updadeServices = async (req, res, next) => {
     res.status(500).json({ error: "Somthing went wrong" });
   }
 };
+
+exports.sendMail = async (req, res, next) => {
+  let mailsender = 'nyangtechnovet@gmail.com';
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: mailsender,
+      pass: 'uhxjogpkqkrfwigk'
+    }
+  });
+  
+  let mailOptions = {
+    from: mailsender,
+    to: req.body.email,
+    subject: req.body.subject,
+    text: req.body.text
+  };
+  
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.log(error);
+      res.status(500).json({
+        massage: "An error",
+        error,
+      });
+    } else {
+      console.log('Email sent: ' + info.response);
+      res.status(200).json({
+        massage: "Email sent",
+        info : info.response,
+      });
+    }
+  });
+}
