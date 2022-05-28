@@ -191,7 +191,7 @@ exports.sendMail = async (req, res, next) => {
     from: mailsender,
     to: "georgeodhi98@gmail.com",
     subject: "Feedback From Your Portfolio",
-    text: `${req.body.name} email ${req.body.email} has sent you a mail`,
+    text: `${req.body.name} email ${req.body.email} has sent you a mail saying ${req.body.text}`,
   };
   transporter.sendMail(mailOption, (error, info) => {
     if (error) {
