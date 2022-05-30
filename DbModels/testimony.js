@@ -6,6 +6,10 @@ const getTestimony = new Schema({
         type: String,
         required: true
     },
+    email: {
+        type: String,
+        required: true
+    },
     text: {
         type: String,
         required: true
@@ -14,9 +18,16 @@ const getTestimony = new Schema({
         type: String,
         required: true
     },
-    email: {
+    jobposition: {
         type: String,
         required: true
+    },
+    num: {
+        type: Number,
+        required: true
+    },
+    status: {
+        type: String,
     }
 },{
     timestamps: true

@@ -90,7 +90,10 @@ exports.updadeTestimony = async (req, res, next) => {
         {
           name: req.body.name,
           imageUrl: req.body.imageUrl,
-          test: req.body.test,
+          text: req.body.text,
+          jobposition: req.body.jobposition,
+          num: req.body.num,
+          status: req.body.status,
         }
       );
       res.status(200).json({
@@ -102,7 +105,10 @@ exports.updadeTestimony = async (req, res, next) => {
         email: req.body.email,
         name: req.body.name,
         imageUrl: req.body.imageUrl,
-        test: req.body.test,
+        text: req.body.text,
+        jobposition: req.body.jobposition,
+        num: req.body.num,
+        status: req.body.status,
       });
 
       const result = await info.save();
