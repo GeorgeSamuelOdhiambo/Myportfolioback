@@ -3,6 +3,7 @@ const Aboutme = require("../DbModels/aboutmeinfo");
 const Testimony = require("../DbModels/testimony");
 const Services = require("../DbModels/services");
 const fs = require("fs");
+const { location } = require("express/lib/response");
 
 exports.getslash = async (req, res, next) => {
   try {
@@ -93,4 +94,10 @@ exports.getresume = async (req, res, next) => {
   readStream.on('error', function(err) {
     res.end(err);
   });
+}
+
+exports.getstk = async (req,res) => {
+  res.status(200).json({sami : "wuwuuwuwuwwu  "+req.body})
+
+  console.log(req);
 }

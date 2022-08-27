@@ -26,8 +26,8 @@ mongoose.connect(process.env.DB_URL,{
   useUnifiedTopology: true 
 })
   .then((result) => {
-    app.listen(process.env.PORT || 8080);
-    console.log("App running... on PORT"+ process.env.PORT);
+    app.listen(process.env.PORT || 8000);
+    console.log("App running... on PORT"+ process.env.PORT || 8000);
   })
   .catch((err) => {
     console.log(err);

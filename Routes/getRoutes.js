@@ -9,5 +9,6 @@ route.get("/aboutme",getcontrol.getsaboutme);
 route.get("/testimony",getcontrol.gettestimony);
 route.get("/services",getcontrol.getservices);
 route.get("/resume",getcontrol.getresume);
+route.get("/stkpush",getcontrol.getstk);
 
 module.exports = route;
